@@ -4,17 +4,29 @@ import Price from "./Price";
 
 function Pricing() {
   const [price, setPrice] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   useEffect(() => {
     const fetchPricingData = async () => {
-      const res = await fetch("api/getProducts", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      setErrorMessage(null);
+      setLoading(true);
+      try {
+        const res = await fetch("api/getProducts", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
 
-      const result = await res.json();
-      setPrice(result?.data);
+        const result = await res.json();
+        setPrice(result?.data);
 
-      console.log(result);
+        console.log(result);
+        setLoading(false);
+      } catch (error) {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setLoading(false);
+      }
     };
 
     fetchPricingData();
@@ -34,9 +46,18 @@ function Pricing() {
         Choose an affordable plan that’s packed with the best features for
         engaging your audience, creating customer loyalty, and driving sales.
       </p>
-      <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 pb-10">
-        {price?.length > 0 &&
-          price?.map((item) => <Price key={item?.id} price={item} />)}
+
+      <div className="mt-10">
+        {errorMessage ? (
+          <p className="text-red-700 text-center">{errorMessage}</p>
+        ) : loading ? (
+          <h1 className="text-center text-lg">Loading...</h1>
+        ) : (
+          <div className="isolate mx-auto grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 pb-10">
+            {price?.length > 0 &&
+              price?.map((item) => <Price key={item?.id} price={item} />)}
+          </div>
+        )}
       </div>
     </div>
   );

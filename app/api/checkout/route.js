@@ -9,10 +9,18 @@ export async function POST(request) {
     const { priceId } = await request.json();
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const response = await stripe.checkout.sessions.create({
-      success_url: "http://localhost:3000/payment-success",
+      success_url:
+        "http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "http://localhost:3000",
       mode: "subscription",
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+          adjustable_quantity: { enabled: true, minimum: 1, maximum: 10 },
+        },
+      ],
+      customer: "cus-121212",
     });
     return NextResponse.json({ data: response, status: true });
   } catch (error) {
