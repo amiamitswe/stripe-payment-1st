@@ -12,6 +12,7 @@ export async function POST(request) {
       success_url:
         "http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "http://localhost:3000",
+
       mode: "subscription",
       line_items: [
         {
@@ -20,7 +21,7 @@ export async function POST(request) {
           adjustable_quantity: { enabled: true, minimum: 1, maximum: 10 },
         },
       ],
-      customer: "cus-121212",
+      customer: "cus_QMYdIWOrIclTzW",
     });
     return NextResponse.json({ data: response, status: true });
   } catch (error) {
