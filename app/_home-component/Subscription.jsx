@@ -22,16 +22,16 @@ const Feature = ({ text, notAllow }) => (
 export default function Subscription() {
   const [selectedAmount, setSelectedAmount] = useState(null);
   return (
-    <div className="min-h-screen bg-gray-900 w-full text-gray-100 flex flex-col justify-center items-center">
+    <div className="bg-gray-900 w-full text-gray-100 flex flex-col justify-center items-center">
       {selectedAmount ? (
         <div className="w-full px-24">
           <Home amount={selectedAmount} />
         </div>
       ) : (
-        <div>
+        <div className="w-2/3 mx-auto px-10">
           <h1 className="text-4xl font-bold mb-8">Choose Your Plan</h1>
-          <div className="flex space-x-8">
-            <div className="max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow-md p-6">
+          <div className="flex space-x-8 ">
+            <div className="w-1/2 bg-gray-800 border border-gray-700 rounded-lg shadow-md p-6">
               <h2 className="text-2xl font-bold mb-4">Standard</h2>
               <p className="text-gray-400 mb-4">$10/month</p>
               <ul className="mb-4">
@@ -47,7 +47,7 @@ export default function Subscription() {
               </button>
             </div>
 
-            <div className="max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow-md p-6">
+            <div className="w-1/2 bg-gray-800 border border-gray-700 rounded-lg shadow-md p-6">
               <h2 className="text-2xl font-bold mb-4">Pro</h2>
               <p className="text-gray-400 mb-4">$20/month</p>
               <ul className="mb-4">
